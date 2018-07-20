@@ -1,5 +1,5 @@
 // peer.rs
-use super::bytes::{Bytes, BytesMut};
+use super::bytes::{Bytes, BytesMut, BufMut};
 use super::futures::sync::mpsc;
 use super::futures::{Future, Poll, Stream, Async, task};
 use super::tokio::io::Error;
@@ -60,8 +60,10 @@ impl Future for Peer {
             println!("Received line ({:?}) : {:?}", self.name, line);
 
             if let Some(message) = line {
-                let mut line = self.name.clone();
-                line.extend_from_slice(b": ");
+                let mut line = BytesMut::new();
+                line.put_slice(b"__[");
+                line.extend_from_slice(&self.name.clone());
+                line.extend_from_slice(b"]__: ");
                 line.extend_from_slice(&message);
                 line.extend_from_slice(b"\r\n");
 
