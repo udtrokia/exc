@@ -1,5 +1,5 @@
 ## Exc
-> TCP Implement design to `p2p`. A chat server that broadcasts a message to all connections.
+> A chat server that broadcasts a message to all connections. ~just a demo~
 
 #### Line - Socket data
 #### Peer - Peer information && context
